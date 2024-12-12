@@ -4,7 +4,7 @@ def calculator():
     print("2. Kurang (-)")
     print("3. Kali (*)")
     print("4. Bagi (/)")
-    
+
     choice = input("Pilih operasi (1/2/3/4): ")
     num1 = float(input("Masukkan angka pertama: "))
     num2 = float(input("Masukkan angka kedua: "))
