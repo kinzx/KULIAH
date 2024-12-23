@@ -1,4 +1,3 @@
-
 print ("===========Masukan Data Diri Anda===========")
 Nama_Lengkap = input('masukan Nama_Lengkap :')
 Nama_Panggilan = input('masukan Nama_Panggilan :')
