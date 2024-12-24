@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Struktur untuk data pasien
-typedef struct {
+typedef struct
+{
     char nama[50];
     char alamat[100];
     char nomor_telepon[15];
@@ -13,11 +13,11 @@ typedef struct {
     char obat[50];
     float total_pembayaran;
     char metode_pembayaran[10];
-    int member; // 1 jika memiliki keanggotaan, 0 jika tidak
+    int member;
 } Pasien;
 
-// Fungsi untuk menambah data pasien
-void tambahPasien(Pasien pasien[], int *jumlah) {
+void tambahPasien(Pasien pasien[], int *jumlah)
+{
     printf("Masukkan nama pasien: ");
     scanf(" %[^\n]", pasien[*jumlah].nama);
     printf("Masukkan alamat pasien: ");
@@ -39,21 +39,27 @@ void tambahPasien(Pasien pasien[], int *jumlah) {
     printf("Apakah pasien memiliki keanggotaan? (1 untuk Ya, 0 untuk Tidak): ");
     scanf("%d", &pasien[*jumlah].member);
 
-    // Jika pasien adalah member, berikan diskon
-    if (pasien[*jumlah].member == 1) {
+    if (pasien[*jumlah].member == 1)
+    {
         printf("Member terdaftar! Anda mendapatkan diskon 10%%.\n");
+        float total_awal = pasien[*jumlah].total_pembayaran;
         pasien[*jumlah].total_pembayaran *= 0.9; // Diskon 10%
-    } else {
-        printf("Pasien bukan member.\n");
+        printf("Total sebelum diskon: %.2f\n", total_awal);
+        printf("Total setelah diskon: %.2f\n", pasien[*jumlah].total_pembayaran);
+    }
+    else
+    {
+        printf("Pasien bukan member. Tidak ada diskon.\n");
     }
     (*jumlah)++;
     printf("Data pasien berhasil ditambahkan.\n");
 }
 
-// Fungsi untuk menampilkan data pasien
-void tampilkanPasien(Pasien pasien[], int jumlah) {
+void tampilkanPasien(Pasien pasien[], int jumlah)
+{
     printf("Data Rekam Medis Pasien:\n");
-    for (int i = 0; i < jumlah; i++) {
+    for (int i = 0; i < jumlah; i++)
+    {
         printf("\nPasien %d:\n", i + 1);
         printf("Nama: %s\n", pasien[i].nama);
         printf("Alamat: %s\n", pasien[i].alamat);
@@ -65,18 +71,24 @@ void tampilkanPasien(Pasien pasien[], int jumlah) {
         printf("Total Pembayaran: %.2f\n", pasien[i].total_pembayaran);
         printf("Metode Pembayaran: %s\n", pasien[i].metode_pembayaran);
         printf("Keanggotaan: %s\n", pasien[i].member == 1 ? "Ya" : "Tidak");
+        if (pasien[i].member == 1)
+        {
+            printf("Diskon: 10%%\n");
+        }
     }
 }
 
-// Fungsi untuk menyimpan data ke file CSV
-void simpanKeFile(Pasien pasien[], int jumlah) {
+void simpanKeFile(Pasien pasien[], int jumlah)
+{
     FILE *file = fopen("Rekam_Medis_Pasien.csv", "w");
-    if (file == NULL) {
+    if (file == NULL)
+    {
         printf("Gagal membuka file untuk menyimpan data.\n");
         return;
     }
     fprintf(file, "Nama,Alamat,Nomor Telepon,Dokter,Riwayat Perawatan,Penyakit,Obat,Total Pembayaran,Metode Pembayaran,Keanggotaan\n");
-    for (int i = 0; i < jumlah; i++) {
+    for (int i = 0; i < jumlah; i++)
+    {
         fprintf(file, "%s,%s,%s,%s,%s,%s,%s,%.2f,%s,%s\n",
                 pasien[i].nama, pasien[i].alamat, pasien[i].nomor_telepon,
                 pasien[i].dokter, pasien[i].riwayat_perawatan, pasien[i].penyakit,
@@ -87,29 +99,32 @@ void simpanKeFile(Pasien pasien[], int jumlah) {
     printf("Data berhasil disimpan ke file Rekam_Medis_Pasien.csv\n");
 }
 
-// Fungsi untuk menghapus data pasien
-void hapusPasien(Pasien pasien[], int *jumlah) {
+void hapusPasien(Pasien pasien[], int *jumlah)
+{
     int index;
     printf("Masukkan nomor pasien yang ingin dihapus (1-%d): ", *jumlah);
     scanf("%d", &index);
-    if (index < 1 || index > *jumlah) {
+    if (index < 1 || index > *jumlah)
+    {
         printf("Nomor pasien tidak valid.\n");
         return;
     }
-    for (int i = index - 1; i < (*jumlah) - 1; i++) {
+    for (int i = index - 1; i < (*jumlah) - 1; i++)
+    {
         pasien[i] = pasien[i + 1];
     }
     (*jumlah)--;
     printf("Data pasien berhasil dihapus.\n");
 }
 
-// Fungsi utama
-int main() {
+int main()
+{
     Pasien pasien[100];
     int jumlah = 0;
     int pilihan;
 
-    do {
+    do
+    {
         printf("\n=== Dental Care Unisa ===\n");
         printf("1. Tambah Data Pasien\n");
         printf("2. Tampilkan Data Pasien\n");
@@ -119,24 +134,25 @@ int main() {
         printf("Masukkan pilihan Anda: ");
         scanf("%d", &pilihan);
 
-        switch (pilihan) {
-            case 1:
-                tambahPasien(pasien, &jumlah);
-                break;
-            case 2:
-                tampilkanPasien(pasien, jumlah);
-                break;
-            case 3:
-                simpanKeFile(pasien, jumlah);
-                break;
-            case 4:
-                hapusPasien(pasien, &jumlah);
-                break;
-            case 5:
-                printf("Terima kasih telah menggunakan sistem Dental Care Unisa.\n");
-                break;
-            default:
-                printf("Pilihan tidak valid.\n");
+        switch (pilihan)
+        {
+        case 1:
+            tambahPasien(pasien, &jumlah);
+            break;
+        case 2:
+            tampilkanPasien(pasien, jumlah);
+            break;
+        case 3:
+            simpanKeFile(pasien, jumlah);
+            break;
+        case 4:
+            hapusPasien(pasien, &jumlah);
+            break;
+        case 5:
+            printf("Terima kasih telah menggunakan sistem Dental Care Unisa.\n");
+            break;
+        default:
+            printf("Pilihan tidak valid.\n");
         }
     } while (pilihan != 5);
 
